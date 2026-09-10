@@ -1,9 +1,9 @@
 | Campo | Contenido |
 |---|---|
-| Empresa | HashiCorp |
-| Actividad y país | Software de infraestructura en la nube, Estados Unidos |
-| Dirección de la página | https://www.hashicorp.com/es |
+| Empresa | Unity Perú |
+| Actividad y país | Soluciones de infraestructura de Data Center, Ciberseguridad y Misión Crítica, Perú |
+| Dirección de la página | https://unity.pe/nosotros/ |
 | Fecha de consulta | 10 de septiembre de 2026 |
-| Misión, texto literal | «Proporcionar un conjunto de herramientas consistente y fiable para que las empresas puedan desplegar, asegurar, conectar y ejecutar sus aplicaciones y software en cualquier entorno (multi-cloud e híbrido)» |
-| Visión, texto literal | No publica visión |
-| ¿Publica visión? | No |
+| Misión, texto literal | «Proporcionar soluciones tecnológicas integrales y avanzadas que optimicen la infraestructura crítica de sus clientes, garantizando la seguridad y la continuidad operativa» |
+| Visión, texto literal | «Consolidarse como una empresa líder en soluciones de infraestructura tecnológica en la región, marcando nuevos estándares de calidad e innovación, y siendo un pilar en el avance del desarrollo tecnológico sostenible en el Perú» |
+| ¿Publica visión? | Sí |
