@@ -1,81 +1,98 @@
 import sys
+import os
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+
+def draw_donut(ax, labels, sizes, colors, title, center_text):
+    wedges, texts = ax.pie(sizes, colors=colors, startangle=90, wedgeprops=dict(width=0.3, edgecolor='w'))
+    ax.text(0, 0, center_text, ha='center', va='center', fontsize=22, weight='bold', color='#333333')
+    ax.set_title(title, fontsize=14, weight='bold', color='#2c3e50', pad=15)
+    ax.legend(wedges, labels, loc="lower center", bbox_to_anchor=(0.5, -0.2), ncol=1, frameon=False, fontsize=11)
 
 def show_visual_diagnostic():
-    fig, ax = plt.subplots(figsize=(10, 8))
-    fig.canvas.manager.set_window_title('Diagnóstico Visual - Unity Perú')
-    ax.axis('off')
+    fig = plt.figure(figsize=(14, 9))
+    fig.canvas.manager.set_window_title('Diagnóstico Visual Avanzado - Unity Perú')
+    fig.patch.set_facecolor('#f8f9fa')
     
     # Title
-    ax.text(0.5, 0.95, "Diagnóstico de Declaraciones Estratégicas\nUnity Perú", 
-            fontsize=16, weight='bold', ha='center', va='top', color='navy')
-            
-    # Mision
-    ax.text(0.05, 0.85, "MISIÓN", fontsize=14, weight='bold', color='darkred')
-    mision_text = "«Proporcionar soluciones tecnológicas integrales y avanzadas que optimicen la\ninfraestructura crítica de sus clientes, garantizando la seguridad y la continuidad operativa»"
-    ax.text(0.05, 0.77, mision_text, fontsize=10, style='italic', bbox=dict(facecolor='#f0f0f0', edgecolor='gray', boxstyle='round,pad=0.5'))
+    fig.suptitle('Dashboard de Diagnóstico Estratégico: Unity Perú', fontsize=24, weight='bold', color='#1a252f', y=0.95)
     
-    # Componentes Misión
-    ax.text(0.05, 0.70, "1. Componentes:", fontsize=12, weight='bold')
-    comp_text = (
-        "[ ✔ ] Qué hacemos\n"
-        "[ ✔ ] Para quién\n"
-        "[ ✖ ] Cómo nos distingue\n"
-        "[ ✔ ] Para qué\n"
-        "[ ✖ ] Con qué compromiso"
-    )
-    ax.text(0.05, 0.53, comp_text, fontsize=11, family='monospace', color='black')
-
-    # Defectos Misión
-    ax.text(0.40, 0.70, "2. Defectos Hallados:", fontsize=12, weight='bold')
-    def_text = (
-        "• Ausencia de compromiso\n"
-        "• Falsa distinción (genérica)"
-    )
-    ax.text(0.40, 0.62, def_text, fontsize=11, color='darkred')
+    # Grid setup
+    gs = fig.add_gridspec(2, 3, width_ratios=[1, 1.6, 0.7], height_ratios=[1, 1], wspace=0.2, hspace=0.5)
     
-    # Pruebas Misión
-    ax.text(0.05, 0.45, "3. Pruebas de Calidad:", fontsize=12, weight='bold')
-    pruebas_text = (
-        "✖ Prueba de sustitución (Falla con Sonda, IBM, etc.)\n"
-        "✖ Prueba de la decisión (Falla por ser muy amplia)\n"
-        "✖ Prueba del reconocimiento (Falla)"
-    )
-    ax.text(0.05, 0.33, pruebas_text, fontsize=11, color='black')
-
-    ax.text(0.05, 0.25, "VEREDICTO MISIÓN: REFORMULAR", fontsize=12, weight='bold', color='white', bbox=dict(facecolor='#cc0000', edgecolor='darkred', boxstyle='round,pad=0.5'))
-
-    # Vision
-    ax.text(0.55, 0.45, "VISIÓN", fontsize=14, weight='bold', color='darkblue')
-    vis_text = (
-        "«Consolidarse como una empresa líder en soluciones de\n"
-        "infraestructura tecnológica en la región, marcando nuevos\n"
-        "estándares de calidad e innovación...»"
-    )
-    ax.text(0.55, 0.33, vis_text, fontsize=9, style='italic', bbox=dict(facecolor='#f0f8ff', edgecolor='blue', boxstyle='round,pad=0.5'))
-
-    # Atributos
-    ax.text(0.55, 0.25, "Atributos:", fontsize=12, weight='bold')
-    attr_text = (
-        "[ ✖ ] Temporalmente acotada\n"
-        "[ ✖ ] Verificable\n"
-        "[ ✔ ] Ambiciosa pero alcanzable\n"
-        "[ ✔ ] Específica del negocio\n"
-        "[ ✔ ] Movilizadora"
-    )
-    ax.text(0.55, 0.08, attr_text, fontsize=11, family='monospace')
-
-    ax.text(0.55, 0.02, "VEREDICTO VISIÓN: AJUSTAR", fontsize=12, weight='bold', color='black', bbox=dict(facecolor='#ffcc00', edgecolor='darkorange', boxstyle='round,pad=0.5'))
-
-    plt.tight_layout()
+    # ================= ROW 1: MISSION =================
+    # Donut Chart
+    ax1 = fig.add_subplot(gs[0, 0])
+    draw_donut(ax1, ['Presente (3)', 'Ausente (2)'], [60, 40], ['#27ae60', '#e74c3c'], 'Componentes de Misión', '60%')
     
-    # Guardar en anexos como pide la guia
-    import os
+    # Text Analysis
+    ax2 = fig.add_subplot(gs[0, 1])
+    ax2.axis('off')
+    ax2.text(0, 1, "MISIÓN - ANÁLISIS DE CALIDAD", fontsize=15, weight='bold', color='#2c3e50', va='top')
+    mision_text = (
+        "Declaración actual:\n«Proporcionar soluciones tecnológicas integrales y avanzadas que optimicen...»\n\n"
+        "► Componentes:\n"
+        "  [ ✔ ] Qué hacemos   [ ✔ ] Para quién   [ ✔ ] Para qué\n"
+        "  [ ✖ ] Cómo nos distingue (Falsa distinción, carece de método único)\n"
+        "  [ ✖ ] Con qué compromiso (Ausente, sin principios rectores declarados)\n\n"
+        "► Pruebas de Calidad:\n"
+        "  [ ✖ ] Prueba de sustitución (Podría aplicar a Sonda, IBM o Cisco)\n"
+        "  [ ✖ ] Prueba de decisión (No acota suficientemente las oportunidades)\n"
+        "  [ ✖ ] Prueba de reconocimiento (Imposible deducir la empresa)"
+    )
+    ax2.text(0, 0.85, mision_text, fontsize=12, va='top', ha='left', color='#34495e', linespacing=1.6)
+
+    # Verdict
+    ax3 = fig.add_subplot(gs[0, 2])
+    ax3.axis('off')
+    rect1 = patches.FancyBboxPatch((0.0, 0.3), 1.0, 0.4, boxstyle="round,pad=0.1", facecolor="#e74c3c", edgecolor="#c0392b", linewidth=2)
+    ax3.add_patch(rect1)
+    ax3.text(0.5, 0.5, "VEREDICTO\nREFORMULAR", ha='center', va='center', fontsize=18, weight='bold', color='white')
+
+    # ================= ROW 2: VISION =================
+    # Donut Chart
+    ax4 = fig.add_subplot(gs[1, 0])
+    draw_donut(ax4, ['Cumple (3)', 'No Cumple (2)'], [60, 40], ['#2980b9', '#f39c12'], 'Atributos de Visión', '60%')
+    
+    # Text Analysis
+    ax5 = fig.add_subplot(gs[1, 1])
+    ax5.axis('off')
+    ax5.text(0, 1, "VISIÓN - ANÁLISIS DE ATRIBUTOS", fontsize=15, weight='bold', color='#2c3e50', va='top')
+    vision_text = (
+        "Declaración actual:\n«Consolidarse como una empresa líder en soluciones de infraestructura...»\n\n"
+        "► Atributos Cumplidos:\n"
+        "  [ ✔ ] Ambiciosa pero alcanzable (Expansión regional desde Perú)\n"
+        "  [ ✔ ] Específica del negocio (Infraestructura tecnológica)\n"
+        "  [ ✔ ] Movilizadora (Motiva a marcar estándares y ser sostenible)\n\n"
+        "► Atributos Fallidos:\n"
+        "  [ ✖ ] Temporalmente acotada (Carece de un año, plazo u horizonte límite)\n"
+        "  [ ✖ ] Verificable (Términos como 'líder' son ambiguos sin métrica concreta)"
+    )
+    ax5.text(0, 0.85, vision_text, fontsize=12, va='top', ha='left', color='#34495e', linespacing=1.6)
+
+    # Verdict
+    ax6 = fig.add_subplot(gs[1, 2])
+    ax6.axis('off')
+    rect2 = patches.FancyBboxPatch((0.0, 0.3), 1.0, 0.4, boxstyle="round,pad=0.1", facecolor="#f39c12", edgecolor="#d68910", linewidth=2)
+    ax6.add_patch(rect2)
+    ax6.text(0.5, 0.5, "VEREDICTO\nAJUSTAR", ha='center', va='center', fontsize=18, weight='bold', color='white')
+
+    # Footer
+    fig.text(0.5, 0.03, "Generado por Sistema de Análisis Estratégico (Python + Matplotlib) - Taller 04", ha='center', fontsize=11, color='#7f8c8d')
+
+    # Save and show
     os.makedirs("docs/evidencias/S04", exist_ok=True)
-    plt.savefig("docs/evidencias/S04/anexo_C_grafico_diagnostico.png", dpi=150)
+    img_path = "docs/evidencias/S04/anexo_C_grafico_diagnostico.png"
+    plt.savefig(img_path, dpi=200, bbox_inches='tight')
+    plt.close(fig)
     
-    # Mostrar la ventana
-    plt.show()
+    try:
+        os.startfile(os.path.abspath(img_path))
+    except Exception as e:
+        print("No se pudo abrir la imagen automáticamente:", e)
+
 
 def main():
     print("==========================================================")
@@ -117,11 +134,10 @@ def main():
     print("VEREDICTO VISION: AJUSTAR.")
     print("==========================================================")
     
-    # Llamar a la ventana gráfica al final
     try:
         show_visual_diagnostic()
     except Exception as e:
-        print("No se pudo mostrar la ventana visual:", e)
+        print("No se pudo generar la salida visual:", e)
 
 if __name__ == '__main__':
     main()
